@@ -13,7 +13,7 @@ for k=1:n
 	      -1  1];
   ud = [udt(theta(k,1));
         udt(theta(k,2))];
-  Fk = Fk - Ak*ud
+  Fk = Fk - Ak*ud;
   for alpha = 1:2
     i = n2f(theta(k,alpha));
     if i>0

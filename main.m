@@ -10,31 +10,28 @@
 
 n = 5;
 [x,h,theta,n2f] = mesh1d(n,1.0);
-% Inhomogeneous Dirichlet
+% Set inhomogeneous Dirichlet here
 ud = zeros(n+1,1);
 % ud(1)=2
 % ud(end)=0.5
 
-
-plot(x,ones(length(x)),'-o')
-
+% Assembly and solution
 A = amat(n,h,theta,n2f);
 F = rhs(n,x,h,theta,n2f,ud);
-uh = A\F
-u = -1/12*x(2:end-1).^4 + 1/12*x(2:end-1); % exact for -uxx=x^2 (this is not exact? not exact quadrature...)
+uh = A\F;
+
+% Error calculation
+u = exact(x(2:end-1));
 e=uh-u;
 z = A*e;
 norm = sqrt(z'*e)
 
-% Add boundaries
+% Add boundaries and plot solution
 uhout = [ ud(1) uh' ud(end)]';
 plot(x,uhout,'k-o')
 hold on
-%exact solution
+% Add more points to exact solution to demonstrate piecewise linear.
 x=[0:0.01:1]';
-% u = 0.5*x.*(ones(length(x),1)-x); % exact for -uxx=1
-% u = -1/6*x.^3 - 1/2*x.^2 + 2/3*x; % exact for -uxx=x+1
-u = -1/12*x.^4 + 1/12*x; % exact for -uxx=x^2 (this is not exact? not exact quadrature...)
-% u = -0.5*x.*(2*ones(length(x),1)+x) + 2*ones(length(x),1); % exact for -uxx=1, inhomogeneous dirichlet
+u=exact(x);
 plot(x,u,'k--')
 
