@@ -1,0 +1,1 @@
+Solves the Poisson equation in 1D. Support for inhomogeneous Dirichlet conditions.
